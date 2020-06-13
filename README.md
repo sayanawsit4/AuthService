@@ -11,11 +11,11 @@ This repo is an `prototype` on the implementation of Spring OAuth2 and currently
 
 **Flow of calls between gateway service and downstream service**
 
-<img src="https://github.com/lnl/AuthService2/blob/master/doc/oauth2_microservice_flow.png" />
+<img src="https://github.com/sayanawsit4/AuthService/blob/master/doc/oauth2_microservice_flow.png" />
 
  **Flow of calls from external client**
 
-<img src="https://github.com/lnl/AuthService2/blob/master/doc/external_client_flow.png" />
+<img src="https://github.com/sayanawsit4/AuthService/blob/master/doc/external_client_flow.png" />
 
 ## Endpoints
 
