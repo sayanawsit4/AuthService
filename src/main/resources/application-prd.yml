@@ -1,0 +1,18 @@
+spring:
+  session.store-type: jdbc
+  banner:
+   localtion: classpath:banner.txt
+  profiles: prd
+  jpa:
+    hibernate:
+       ddl-auto: create
+    generate-ddl: true
+  datasource:
+    url: jdbc:postgresql://localhost/lnl?currentSchema=lnlauth2
+    username: postgres
+    password: lnl123
+    platform: postgresql
+  mvc:
+   throw-exception-if-no-handler-found: true
+  csrf.disabled: false
+  xframe-headers.disabled: true

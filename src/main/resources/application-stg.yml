@@ -1,0 +1,74 @@
+server:
+  port: 7070
+  contextPath: ""
+
+jwt:
+    certificate:
+      store:
+        file: classpath:/certificate/sayan.jks
+        password: {JWT_PASSWORD}
+      key:
+        alias: myauthkey
+        password: {JWT_PASSWORD}
+
+token:
+  validity: 212000
+  jwt: false
+
+hmac:
+  clockSyncTolerance: 86400000
+
+url:
+  registerKit: https://www.lnl.com
+  reset: https://www.lnl.com
+
+audit:
+   maxLockdownPeriod: 30
+   maxVaiableAttempt: 2
+
+#  every day 8 am
+purge:
+   cron.expression: 0 0 8 * * *
+
+security:
+  logging:
+    attempt: 2
+    max-lock-down: 30
+  oauth2:
+    resource:
+      filter-order: 3
+      jwt:
+        keyValue: |
+                 -----BEGIN PUBLIC KEY-----
+                 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoTOQ4uIILzJmZGumYUQo
+                 UnSsRudErY9pdVdDNfZrI/wWwx+KbLv3P9rhkyU/wwAIiTINqjXmI7p5nRsqvShJ
+                 huuTWUzHtkxG3lgbn1UfKDUgq87HK9W3/d7wvUVjRoqhOuj+tRTMy5NjRk+c1IoH
+                 PyWCTF51axAoy4CX+iP5cJ+rQnhHlb9MLX8bXMO5l1D2a84jTp4TREjgD23i/NwB
+                 PWlR4mGR1PyaQC2NgY3nDXukuxAfHQ4hgE+WaPlNS6xYh9yarS4GBaEhzjg/yFIy
+                 NM4+YheC+n8i0SpQZxYRYVjSk8VScGbrh2L/Iw7fBPB1pcxJRmjCDSbEqx6RS6SM
+                 DwIDAQAA
+                 -----END PUBLIC KEY-----
+---
+spring:
+  session.store-type: jdbc
+  banner:
+   localtion: classpath:banner.txt
+  profiles: stg
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    properties:
+      hibernate:
+       default_schema: lnlauth2
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_DB_USER}
+    password: ${POSTGRES_DB_PASSWORD}
+    platform: postgresql
+  schema: lnlauth2
+  mvc:
+   throw-exception-if-no-handler-found: true
+  csrf.disabled: true
+  xframe-headers.disabled: true
+---

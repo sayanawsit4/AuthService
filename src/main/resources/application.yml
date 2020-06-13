@@ -1,0 +1,81 @@
+server:
+  port: 7070
+  contextPath: ""
+
+jwt:
+    certificate:
+      store:
+        file: classpath:/certificate/sayan.jks
+        password: sayan
+      key:
+        alias: myauthkey
+        password: sayan
+
+token:
+  validity: 212000
+  jwt: false
+
+hmac:
+  clockSyncTolerance: 86400000
+
+url:
+  registerKit: https://www.lnl.com
+  reset: https://www.lnl.com
+
+audit:
+   maxLockdownPeriod: 30
+   maxVaiableAttempt: 2
+
+#  every day 8 am
+purge:
+   cron.expression: 0 0 8 * * *
+
+
+spring.sendgrid.api-key: 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
+
+security:
+  logging:
+    attempt: 2
+    max-lock-down: 30
+  oauth2:
+    resource:
+      filter-order: 3
+      jwt:
+        keyValue: |
+                 -----BEGIN PUBLIC KEY-----
+                 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoTOQ4uIILzJmZGumYUQo
+                 UnSsRudErY9pdVdDNfZrI/wWwx+KbLv3P9rhkyU/wwAIiTINqjXmI7p5nRsqvShJ
+                 huuTWUzHtkxG3lgbn1UfKDUgq87HK9W3/d7wvUVjRoqhOuj+tRTMy5NjRk+c1IoH
+                 PyWCTF51axAoy4CX+iP5cJ+rQnhHlb9MLX8bXMO5l1D2a84jTp4TREjgD23i/NwB
+                 PWlR4mGR1PyaQC2NgY3nDXukuxAfHQ4hgE+WaPlNS6xYh9yarS4GBaEhzjg/yFIy
+                 NM4+YheC+n8i0SpQZxYRYVjSk8VScGbrh2L/Iw7fBPB1pcxJRmjCDSbEqx6RS6SM
+                 DwIDAQAA
+                 -----END PUBLIC KEY-----
+---
+spring:
+  session.store-type: jdbc
+  banner:
+   localtion: classpath:banner.txt
+  profiles: default
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    properties:
+      hibernate:
+       default_schema: lnlauth2
+  datasource:
+    url: jdbc:postgresql://localhost/lnl
+    username: lnl
+    password: lnl123
+    platform: postgresql
+  schema: lnlauth2
+  mvc:
+   throw-exception-if-no-handler-found: true
+  csrf.disabled: true
+  xframe-headers.disabled: true
+  loginUrl: https://apps-staging.lnl.com
+  registerKitUrl: https://staging.lnl.com/register
+  backToHomeUrl: https://apps-staging.lnl.com
+  appsUrl: https://apps-staging.lnl.com/auth1.aspx?html.rp=true
+---

@@ -1,0 +1,38 @@
+package com.lnl.config.audit;
+
+import org.springframework.boot.actuate.audit.AuditEvent;
+import org.springframework.boot.actuate.security.AbstractAuthorizationAuditListener;
+import org.springframework.security.access.event.AbstractAuthorizationEvent;
+import org.springframework.security.access.event.AuthorizationFailureEvent;
+import org.springframework.security.web.FilterInvocation;
+import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Component
+public class AuthorizationAuditListener extends AbstractAuthorizationAuditListener {
+
+    public static final String AUTHORIZATION_FAILURE = "AUTHORIZATION_FAILURE";
+
+    @Override
+    public void onApplicationEvent(AbstractAuthorizationEvent event) {
+        if (event instanceof AuthorizationFailureEvent) {
+            onAuthorizationFailureEvent((AuthorizationFailureEvent) event);
+        }
+    }
+
+    //this captures a authorization failure, like accessing a secure endpoint without bearer information
+    //wraps up in an Audit event that Attempt logger uses to log events
+    private void onAuthorizationFailureEvent(AuthorizationFailureEvent event) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("type", event.getAccessDeniedException().getClass().getName());
+        data.put("message", event.getAccessDeniedException().getMessage());
+        if (event.getSource() instanceof FilterInvocation)
+            data.put("requestUrl", ((FilterInvocation) event.getSource()).getRequestUrl());
+        if (event.getAuthentication().getDetails() != null) {
+            data.put("details", event.getAuthentication().getDetails());
+        }
+        publish(new AuditEvent(event.getAuthentication().getName(), AUTHORIZATION_FAILURE, data));
+    }
+}

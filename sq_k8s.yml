@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonar-q-lnl
+  namespace: ENVIRONMENT
+spec:
+  ports:
+    - port: 80
+      targetPort: 9000
+  selector:
+    app: sonar-q-lnl
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonar-q-lnl
+  namespace: ENVIRONMENT
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: sonar-q-lnl
+  template:
+    metadata:
+      labels:
+        app: sonar-q-lnl
+    spec:
+      containers:
+        - name: sonar-q-lnl
+          image: ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/sonar-q-lnl:latest
+          securityContext:
+            privileged: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+          ports:
+            - containerPort: 9000

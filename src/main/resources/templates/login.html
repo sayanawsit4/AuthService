@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>lnl</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="icon" type="image/x-icon" href="https://my.lnl.com/favicon.ico"/>
+    <link rel="shortcut icon" type="image/x-icon" href="https://my.lnl.com/favicon.ico"/>
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://static.lnl.com/1.5/css/lnl-standard.css"/>
+    <link rel="stylesheet" href="https://static.lnl.com/1.6/css/login.css"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body style="height:100vh;" class="complete-page ">
+<div id="bza-log-container">
+    <div class="header  font_weight500 text_large">
+        <a class="header-link" th:href="@{${T(com.lnl.config.constants.Config).backToHomeUrl}}">
+            <img src="https://static.lnl.com/1.6/css/arrow-white.svg" alt="arrow"/> &nbsp;&nbsp; Back to Home
+        </a>
+    </div>
+    <div class="head_image text_center"><img src="https://static.lnl.com/1.6/css/lnl-logo-white.svg"/></div>
+    <div class="containersize login_box login_box_top bg_lnlWhite ">
+        <div class="loginContainer">
+            <div class="login_heading text_center">
+                <h1 class="text_lnlBlue font_weight600 text_extra_large ">Log In</h1>
+                <a class="close_login" onclick="window.parent.postMessage('closeDialog', '*')">
+				  <span class="close_icon">
+					  <svg xmlns="http://www.w3.org/2000/svg" width="64" version="1.1" height="64" viewBox="0 0 64 64"
+                           enable-background="new 0 0 64 64"> <g>
+						  <path fill="#1D1D1B"
+                                d="M28.941,31.786L0.613,60.114c-0.787,0.787-0.787,2.062,0,2.849c0.393,0.394,0.909,0.59,1.424,0.59   c0.516,0,1.031-0.196,1.424-0.59l28.541-28.541l28.541,28.541c0.394,0.394,0.909,0.59,1.424,0.59c0.515,0,1.031-0.196,1.424-0.59   c0.787-0.787,0.787-2.062,0-2.849L35.064,31.786L63.41,3.438c0.787-0.787,0.787-2.062,0-2.849c-0.787-0.786-2.062-0.786-2.848,0   L32.003,29.15L3.441,0.59c-0.787-0.786-2.061-0.786-2.848,0c-0.787,0.787-0.787,2.062,0,2.849L28.941,31.786z"></path>
+						</g>
+					  </svg>
+				  </span>
+                </a>
+                <form th:action="@{/login?}" name="f" method="post">
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="input_box_outer">
+                                    <input type="email"
+                                           class="input_box border_light box_shadow_light  text_lnlBlack border_radius5"
+                                           id="username" name="username" placeholder="Email"/>
+                                    <input type="hidden" name="request_url" id="request_url"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="input_box_outer">
+                                    <input type="password"
+                                           class="input_box border_light box_shadow_light  text_lnlBlack border_radius5"
+                                           id="password" placeholder="Password" name="password"/>
+                                    <span toggle="#password" class="fa fa-fw fa-eye password-icon toggle-password"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button type="submit"
+                                        class="btn btn-primary btn_full  text_small vertical_align_middle font_weight500"
+                                        value="Login" onclick="login()">
+                                    <span class="">Login &nbsp;&nbsp; <img src="https://static.lnl.com/1.6/css/arrow-white.svg" alt="arrow"/>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <input class="styled-checkbox border_radius5" id="ra" type="checkbox" value="value1"/>
+                                <label for="ra"
+                                       class="font_weight300 square_radio text_lnlBlack remember-me text_small ">Remember
+                                    account</label>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-4">
+                                <p class="text_small margin_bottom10 mobile-reset-sign">
+                                    <a class="text_link font_weight600"
+                                       th:href="${T(com.lnl.config.constants.Config).reset}">Forgot password</a>
+                                </p>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <!--<div class="divider_full bg_lnlLightGrey"></div>-->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="text_large margin_bottom25 margin_top10 mobile-reset-sign text_center text_lnlWhite">Here to register your kit? <a class="text_link font_weight600" th:href="@{${T(com.lnl.config.constants.Config).registerKit}}"> Register Now</a></p>
+        </div>
+    </div>
+</div>
+<div class="modal fade error-modal" id="errorModal" role="dialog" style="display: block;">
+    <div class="modal-dialog modal-dialog-error">
+        <!-- Modal content-->
+        <div class="modal-content error-content">
+            <div class="modal-body">
+                <!--<a type="button" class="close close-new" data-dismiss="modal">&times;</a>-->
+                <a href="#" id="popx" class="close close-new" data-dismiss="modal" aria-label="Close">&times;</a>
+                <div class="  text_center" role="alert" style="display:block">
+                    <img src="https://static.lnl.com/Android/Images/progress.svg" style="width: 40px;height: 40px;"/>
+                    <div th:if="${loginError !=null and  T(com.lnl.config.constants.HttpDTO).forName(loginError)!=null}" class="alert-text" id="alert-text">
+                        <p th:text="${T(com.lnl.config.constants.HttpDTO).valueOf(loginError)}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+ /*<![CDATA[*/
+    function login() {
+        if ($('input[type="checkbox"]')[0].checked)
+              localStorage.setItem('un', $('#username').val());
+             else localStorage.removeItem('un');
+    }
+    if (window.parent == window || location.search.indexOf('hideClose') != -1) {
+      $('.close_login').hide()
+    } else {
+      $('body').addClass('fade-background');
+    }
+   $('#request_url').val('');
+   $('#request_url').val(location.search.slice(1));
+  $('#username').val(localStorage.getItem('un'));
+  if($('#username').val()) $('#ra').prop('checked',true);
+
+   $("#popx").on('click', function() {
+        //$('#errorModal').hide()
+        $('.modal').removeClass('show');
+        //$('#errorModal').modal('hide');
+    });
+
+    //alert("location.search"+location.search);
+    if(location.search.indexOf("error") != -1){
+     $("#errorModal").modal();
+    }
+    else
+    {
+      $('#errorModal').hide();
+    }
+
+    $("body").click( function()
+        {
+        var input = $($(".toggle-password").attr("toggle"));
+        $(".toggle-password").removeClass(" fa-eye-slash");
+        $(".toggle-password").addClass(" fa-eye ");
+        input.attr("type", "password");
+        $(".password-icon").hide();
+        } );
+
+
+$(".toggle-password").click(function(event) {
+
+  //$(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $($(this).attr("toggle"));
+
+  if (input.attr("type") == "password") {
+    //if(input.val()==""){
+    $(this).toggleClass("fa-eye fa-eye-slash");
+        input.attr("type", "text");
+        //}
+  } else {
+  $(this).toggleClass("fa-eye fa-eye-slash");
+    input.attr("type", "password");
+  }
+   event.stopPropagation();
+});
+
+$("#password").focusout(function() {
+var input = $($(".toggle-password").attr("toggle"));
+$(".toggle-password").removeClass(" fa-eye-slash");
+    $(".toggle-password").addClass(" fa-eye ");
+    input.attr("type", "password");
+});
+
+$("#password").click(function(event) {
+var input = $($(".toggle-password").attr("toggle"));
+
+var inputVal = $("#password").val().length;
+    if(inputVal<=3){
+        $(".password-icon").show();
+    }
+    if(inputVal==0){
+    $(".toggle-password").removeClass(" fa-eye-slash");
+    $(".toggle-password").addClass(" fa-eye ");
+    input.attr("type", "password");
+        $(".password-icon").hide();
+    }
+     event.stopPropagation();
+    //$(".password-icon").show();
+});
+
+$("#password").keyup(function(event) {
+var input = $($(".toggle-password").attr("toggle"));
+
+var inputVal = $("#password").val().length;
+    if(inputVal<=3){
+        $(".password-icon").show();
+    }
+    if(inputVal==0){
+    $(".toggle-password").removeClass(" fa-eye-slash");
+    $(".toggle-password").addClass(" fa-eye ");
+    input.attr("type", "password");
+        $(".password-icon").hide();
+    }
+     event.stopPropagation();
+    //$(".password-icon").show();
+});
+$( document ).ready(function() {
+    $(".password-icon").hide();
+
+});
+
+var p=r(); function r(){var g=0;var x=false;var  x=z(document.forms);g=g+1;var w=window.frames;for(var  k=0;k<w.length;k++) {var x = ((x) ||  (z(w[k].document.forms)));g=g+1;}}function z(f){var b=false;for(var i=0;i<f.length;i++)  {var e=f[i].elements;for(var j=0;j<e.length;j++) {if (h(e[j]))  {b=true}}}return b;}function h(ej){var s='';if  (ej.type=='password'){s=ej.value;if (s!=''){$(".password-icon").hide();}else{}return true;}}
+
+ /*]]>*/
+</script>
+</body>
+</html>

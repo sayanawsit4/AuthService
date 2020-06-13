@@ -1,0 +1,26 @@
+spring:
+  session.store-type: jdbc
+  banner:
+   localtion: classpath:banner.txt
+  profiles: local-uat
+  jpa:
+    hibernate:
+       ddl-auto: update
+    generate-ddl: true
+    properties:
+      hibernate:
+       default_schema: lnlauth2
+  datasource:
+    url: jdbc:postgresql://localhost/lnl
+    username: postgres
+    password: lnl123
+    platform: postgresql
+  schema: lnlauth2
+  mvc:
+   throw-exception-if-no-handler-found: true
+  csrf.disabled: false
+  xframe-headers.disabled: true
+  loginUrl: https://apps-staging.lnl.com
+  registerKitUrl: https://staging.lnl.com/register
+  backToHomeUrl: https://apps-staging.lnl.com
+  appsUrl: https://apps-staging.lnl.com/auth1.aspx?html.rp=true

@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service-v2
+  namespace: ENVIRONMENT
+spec:
+  ports:
+    - port: 7070
+      targetPort: 7070
+  selector:
+    app: auth-service-v2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service-v2
+  namespace: ENVIRONMENT
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 2
+      maxSurge: 2
+  selector:
+    matchLabels:
+      app: auth-service-v2
+  template:
+    metadata:
+      labels:
+        app: auth-service-v2
+    spec:
+      containers:
+        - name: auth-service-v2
+          image: CONTAINER_IMAGE
+          env:
+            - name: POSTGRES_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: lnlauth2-db-secret
+                  key: username
+            - name: POSTGRES_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: lnlauth2-db-secret
+                  key: password
+            - name: POSTGRES_URL
+              valueFrom:
+                secretKeyRef:
+                  name: lnlauth2-db-secret
+                  key: url
+            - name: JWT_PASSWORD
+              valueFrom:
+                 secretKeyRef:
+                   name: lnlauth2-db-secret
+                   key: jwt
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                 secretKeyRef:
+                   name: lnlauth2-db-secret
+                   key: spring_profile
+          securityContext:
+            privileged: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+          ports:
+            - containerPort: 7070
